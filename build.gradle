@@ -1,5 +1,25 @@
 plugins {
     id 'java'
+    id 'war' // jsp
+}
+
+// jsp 프로젝트를 위해 필요한 설정
+sourceSets {
+    def webappDir = file('src/main/webapp')
+    main {
+        java {
+            srcDirs 'src/main/java'
+        }
+
+        resources {
+            srcDirs webappDir
+        }
+    }
+    doLast {
+        main.resources.srcDirs*.mkdirs()
+        new File(webappDir, 'WEB-INF').mkdir()
+        new File(webappDir, 'META-INF').mkdir()
+    }
 }
 
 group = 'org.example'
@@ -12,6 +32,22 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // HTTP 요청 라이브러리
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+    // JSON 파싱 라이브러리
+    implementation 'com.google.code.gson:gson:2.10'
+
+    // SQLite JDBC 드라이버
+    implementation 'org.xerial:sqlite-jdbc:3.41.2.0'
+
+    // Lombok (Getter/Setter 자동 생성)
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    // Servlet API (필수)
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
 }
 
 test {
