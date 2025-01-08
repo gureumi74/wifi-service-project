@@ -73,4 +73,53 @@ public class LocationService {
 
         return locationList;
     }
+
+    // 위치 정보 저장 기능 (입력받은 좌표값 DB에 저장)
+    public void searchLocation(double lat, double lnt) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String sql = "insert into locations (lat, lnt, saved_at) " +
+                "values (?, ?, ?)";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDouble(1, lat);
+            preparedStatement.setDouble(2, lnt);
+            preparedStatement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+            int affected = preparedStatement.executeUpdate();
+
+            if (affected > 0) {
+                System.out.println(lat + ", " + lnt + " 위치 정보 저장 완료");
+            } else {
+                System.out.println("저장 실패");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
