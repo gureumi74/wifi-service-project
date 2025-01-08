@@ -15,6 +15,10 @@ public class WifiApiService {
     private int endPage;
     private String url;
 
+    public int getEndPage() {
+        return endPage;
+    }
+
     // API - 전체 wifi 정보 불러오고 DB에 새로 저장하기
     public void wifiApiLoad() {
         LocationService locationService = new LocationService();
