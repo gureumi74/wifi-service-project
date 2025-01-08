@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="index.js" defer></script>
+    <title>공공 와이파이 서비스 프로젝트</title>
     <style>
         #wifiService {
           font-family: Arial, Helvetica, sans-serif;
@@ -38,7 +39,6 @@
     </style>
 </head>
 <body>
-
 <h1>와이파이 정보 구하기</h1>
 <form id ="locationForm">
     <label for="lat">LAT:</label>
@@ -50,10 +50,10 @@
 </form>
 <p>
     <a href="${pageContext.request.contextPath}/">홈</a>
-    <a href="${pageContext.request.contextPath}/history">위치 히스토리 목록</a>
-    <a href="${pageContext.request.contextPath}/load-api">Open API 정보 가져오기</a>
-    <a href="${pageContext.request.contextPath}/bookmark-view">즐겨찾기 보기</a>
-    <a href="${pageContext.request.contextPath}/bookmark-manage">즐겨찾기 관리</a>
+    <a href="${pageContext.request.contextPath}/history.jsp">위치 히스토리 목록</a>
+    <a href="${pageContext.request.contextPath}/load-api.jsp">Open API 정보 가져오기</a>
+    <a href="${pageContext.request.contextPath}/bookmark-view.jsp">즐겨찾기 보기</a>
+    <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">즐겨찾기 관리</a>
 </p>
 <p class="wifi-info">
     <table id="wifiService">
