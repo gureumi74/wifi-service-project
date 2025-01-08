@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import wifiService.domain.location.LocationService;
+import wifiService.global.DataSourceConfig;
 
 import java.sql.*;
 
@@ -21,8 +22,8 @@ public class WifiApiService {
 
     // API - 전체 wifi 정보 불러오고 DB에 새로 저장하기
     public void wifiApiLoad() {
-        LocationService locationService = new LocationService();
-        this.url = locationService.sqliteDriveLoad();
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        this.url = dataSourceConfig.sqliteDriveLoad();
 
         // DB 드롭 및 재생성
         Connection connection = null;

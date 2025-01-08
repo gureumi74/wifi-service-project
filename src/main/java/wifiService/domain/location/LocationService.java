@@ -1,29 +1,17 @@
 package wifiService.domain.location;
 
+import wifiService.global.DataSourceConfig;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LocationService {
-    // sqlite JDBC 드라이버 로드
-    public String sqliteDriveLoad() {
-        String path = System.getenv("SQLITE_PATH");
-        String url = "jdbc:sqlite:" + path;
-
-        try {
-            // SQLite JDBC 드라이버 로드
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return url;
-    }
-
     // 위치 정보 전체 보기 기능
     public List<Location> viewList() {
         List<Location> locationList = new ArrayList<>();
-        String url = sqliteDriveLoad();
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
