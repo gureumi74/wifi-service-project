@@ -14,7 +14,7 @@ public class Wifi {
     private String instlMby; // 설치 기관
     private String svcSe; // 서비스 구분
     private String cmcwr; // 망종류
-    private String cnstcYear; // 설치년도
+    private Integer cnstcYear; // 설치년도
     private String inoutDoor; // 실내외 구분
     private String remars; // wifi 접속 환경
     private double wifiLAT; // y 좌표
@@ -110,11 +110,11 @@ public class Wifi {
         this.cmcwr = cmcwr;
     }
 
-    public String getCnstcYear() {
+    public Integer getCnstcYear() {
         return cnstcYear;
     }
 
-    public void setCnstcYear(String cnstcYear) {
+    public void setCnstcYear(Integer cnstcYear) {
         this.cnstcYear = cnstcYear;
     }
 
