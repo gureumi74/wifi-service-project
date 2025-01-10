@@ -10,6 +10,8 @@ import wifiService.domain.location.LocationService;
 import wifiService.global.DataSourceConfig;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WifiApiService {
     private int startPage;
@@ -175,5 +177,83 @@ public class WifiApiService {
             }
         }
         System.out.println("모든 데이터 저장 완료");
+    }
+
+    // 특정 wifi 정보 가져오기
+    public Wifi getWifiInfo(Integer wifiId) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Wifi wifi = new Wifi();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String sql = "select * from WIFI_API_DATA where WIFI_ID = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, wifiId);
+
+            // 쿼리 실행
+            rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                wifi.setWifiId(wifiId);
+                wifi.setMgrNo(rs.getString("X_SWIFI_MGR_NO"));
+                wifi.setWrdofc(rs.getString("X_SWIFI_WRDOFC"));
+                wifi.setWifiName(rs.getString("X_SWIFI_MAIN_NM"));
+                wifi.setAddress1(rs.getString("X_SWIFI_ADRES1"));
+                wifi.setAddress2(rs.getString("X_SWIFI_ADRES2"));
+                wifi.setInstlFloor(rs.getString("X_SWIFI_INSTL_FLOOR"));
+                wifi.setInstlTy(rs.getString("X_SWIFI_INSTL_TY"));
+                wifi.setInstlMby(rs.getString("X_SWIFI_INSTL_MBY"));
+                wifi.setSvcSe(rs.getString("X_SWIFI_SVC_SE"));
+                wifi.setCmcwr(rs.getString("X_SWIFI_CMCWR"));
+                wifi.setCnstcYear(rs.getInt("X_SWIFI_CNSTC_YEAR"));
+                wifi.setInoutDoor(rs.getString("X_SWIFI_INOUT_DOOR"));
+                wifi.setRemars(rs.getString("X_SWIFI_REMARS3"));
+                wifi.setWifiLAT(rs.getDouble("LAT"));
+                wifi.setWifiLNT(rs.getDouble("LNT"));
+                wifi.setWorkDttm(rs.getString("WORK_DTTM"));
+                wifi.setSavedAt(rs.getTimestamp("SAVED_AT"));
+            } else {
+                System.out.println("Wifi 정보 반환 실패");
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return wifi;
     }
 }
