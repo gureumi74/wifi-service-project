@@ -40,13 +40,13 @@
 </head>
 <body>
 <h1>와이파이 정보 구하기</h1>
-<form id ="locationForm">
+<form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
     <label for="lat">LAT:</label>
     <input type="text" id="lat" placeholder="0.0" name="lat">
     <label for="lnt">LNT:</label>
     <input type="text" id="lnt" placeholder="0.0" name="lnt">
     <button type="button" onclick="getLocation()">내 위치 가져오기</button>
-    <button type="button" href="${pageContext.request.contextPath}/wifi-info.jsp">근처 WIFI 정보 보기</button>
+    <button type="submit">근처 WIFI 정보 보기</button>
 </form>
 <p>
     <a href="${pageContext.request.contextPath}/">홈</a>
