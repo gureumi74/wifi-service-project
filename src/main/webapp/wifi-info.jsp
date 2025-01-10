@@ -3,6 +3,7 @@
 <%@ page import="wifiService.domain.location.LocationService" %>
 <%@ page import="wifiService.domain.wifi.WifiApiService" %>
 <%@ page import="wifiService.domain.history.History" %>
+<%@ page import="wifiService.domain.history.HistoryService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +51,8 @@
 	LocationService locationService = new LocationService();
     // 위치 저장 후 리스트 받아오기
     List<History> wifiList = locationService.searchLocation(lat, lnt);
+    HistoryService historyService = new HistoryService();
+    historyService.insertHistory(wifiList);
 
 %>
 <h1>와이파이 정보 구하기</h1>
