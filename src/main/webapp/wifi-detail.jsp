@@ -46,14 +46,19 @@
 </head>
 <body>
 <%
-    double lat = Double.parseDouble(request.getParameter("lat"));
-    double lnt = Double.parseDouble(request.getParameter("lnt"));
-	LocationService locationService = new LocationService();
-    // 위치 저장 후 리스트 받아오기
-    List<History> wifiList = locationService.searchLocation(lat, lnt);
-    HistoryService historyService = new HistoryService();
-    historyService.insertHistory(wifiList);
-
+    String wifiIdStr = request.getParameter("wifiId");
+    String distance = request.getParameter("distance");
+    System.out.println(wifiIdStr + " " + distance);
+    Wifi wifi = null;
+    if (wifiIdStr != null && distance != null) {
+        Integer wifiId = Integer.parseInt(wifiIdStr);
+        WifiApiService wifiApiService = new WifiApiService();
+        wifi = wifiApiService.getWifiInfo(wifiId);
+        System.out.println(wifiId + " " + distance);
+    } else {
+        System.out.println("디테일 정보 불러오기 실패");
+    }
+    System.out.println(wifi.getWifiName());
 %>
 <h1>와이파이 정보 구하기</h1>
 <form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
@@ -75,56 +80,71 @@
     <table id="wifiService">
         <tr>
             <th>거리(km)</th>
+            <td><%= distance %></td>
+        <tr>
             <th>관리번호</th>
-            <th>자치구</th>
-            <th>와이파이명</th>
-            <th>도로명주소</th>
-            <th>상세주소</th>
-            <th>설치위치(층)</th>
-            <th>설치유형</th>
-            <th>설치기관</th>
-            <th>서비스구분</th>
-            <th>망종류</th>
-            <th>설치년도</th>
-            <th>실내외구분</th>
-            <th>WIFI접속환경</th>
-            <th>X좌표</th>
-            <th>Y좌표</th>
-            <th>작업일자</th>
+            <td><%= wifi.getMgrNo() %></td>
         </tr>
-        <tbody>
-            <%
-                for (History history : wifiList) {
-                    WifiApiService wifiApiService = new WifiApiService();
-                    Wifi wifi = wifiApiService.getWifiInfo(history.getWifiId());
-                    out.write("<tr>");
-                    out.write("<td>" + history.getDistance() + "</td>");
-                    out.write("<td>" + wifi.getMgrNo() + "</td>");
-                    out.write("<td>" + wifi.getWrdofc() + "</td>");
-                    %>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?wifiId=<%= wifi.getWifiId() %>&distance=<%= history.getDistance() %>">
-                            <%= wifi.getWifiName() %>
-                        </a>
-                    </td>
-                    <%
-                    out.write("<td>" + wifi.getAddress1() + "</td>");
-                    out.write("<td>" + wifi.getAddress2() + "</td>");
-                    out.write("<td>" + wifi.getInstlFloor() + "</td>");
-                    out.write("<td>" + wifi.getInstlTy() + "</td>");
-                    out.write("<td>" + wifi.getInstlMby() + "</td>");
-                    out.write("<td>" + wifi.getSvcSe() + "</td>");
-                    out.write("<td>" + wifi.getCmcwr() + "</td>");
-                    out.write("<td>" + wifi.getCnstcYear() + "</td>");
-                    out.write("<td>" + wifi.getInoutDoor() + "</td>");
-                    out.write("<td>" + wifi.getRemars() + "</td>");
-                    out.write("<td>" + wifi.getWifiLAT() + "</td>");
-                    out.write("<td>" + wifi.getWifiLNT() + "</td>");
-                    out.write("<td>" + wifi.getWorkDttm() + "</td>");
-                    out.write("</tr>");
-                }
-            %>
-        </tbody>
+        <tr>
+            <th>자치구</th>
+            <td><%= wifi.getWrdofc() %></td>
+        </tr>
+        <tr>
+            <th>와이파이명</th>
+            <td><%= wifi.getWifiName() %></td>
+        </tr>
+        <tr>
+            <th>도로명주소</th>
+            <td><%= wifi.getAddress1() %></td>
+        </tr>
+        <tr>
+            <th>상세주소</th>
+            <td><%= wifi.getAddress2() %></td>
+        </tr>
+        <tr>
+            <th>설치위치(층)</th>
+            <td><%= wifi.getInstlFloor() %></td>
+        </tr>
+        <tr>
+            <th>설치유형</th>
+            <td><%= wifi.getInstlTy() %></td>
+        </tr>
+        <tr>
+            <th>설치기관</th>
+            <td><%= wifi.getInstlMby() %></td>
+        </tr>
+        <tr>
+            <th>서비스구분</th>
+            <td><%= wifi.getSvcSe() %></td>
+        </tr>
+        <tr>
+            <th>망종류</th>
+            <td><%= wifi.getCmcwr() %></td>
+        </tr>
+        <tr>
+            <th>설치년도</th>
+            <td><%= wifi.getCnstcYear() %></td>
+        </tr>
+        <tr>
+            <th>실내외구분</th>
+            <td><%= wifi.getInoutDoor() %></td>
+        </tr>
+        <tr>
+            <th>와이파이접속환경</th>
+            <td><%= wifi.getRemars() %></td>
+        </tr>
+        <tr>
+            <th>X좌표</th>
+            <td><%= wifi.getWifiLAT() %></td>
+        </tr>
+        <tr>
+            <th>Y좌표</th>
+            <td><%= wifi.getWifiLNT() %></td>
+        </tr>
+        <tr>
+            <th>작업일자</th>
+            <td><%= wifi.getWorkDttm() %></td>
+        </tr>
     </table>
 </p>
 </body>
