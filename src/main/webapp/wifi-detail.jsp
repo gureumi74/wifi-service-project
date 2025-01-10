@@ -4,6 +4,8 @@
 <%@ page import="wifiService.domain.wifi.WifiApiService" %>
 <%@ page import="wifiService.domain.history.History" %>
 <%@ page import="wifiService.domain.history.HistoryService" %>
+<%@ page import="wifiService.domain.bookmark.BookmarkGroup" %>
+<%@ page import="wifiService.domain.bookmark.BookmarkService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,6 +60,11 @@
     } else {
         System.out.println("디테일 정보 불러오기 실패");
     }
+
+    BookmarkService bookmarkService = new BookmarkService();
+    List<BookmarkGroup> bookmarkList = bookmarkService.viewBookmark();
+    System.out.println(bookmarkList.get(0).getName());
+
     System.out.println(wifi.getWifiName());
 %>
 <h1>와이파이 정보 구하기</h1>
@@ -76,6 +83,18 @@
     <a href="${pageContext.request.contextPath}/bookmark-view.jsp">즐겨찾기 보기</a>
     <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">즐겨찾기 관리</a>
 </p>
+<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-add.jsp">
+    <select if="bookmarkSelect" name="selectBookmark">
+    <%
+        for (BookmarkGroup bookmarkGroup : bookmarkList) {
+    %>
+        <option value="<%= bookmarkGroup.getName() %>"><%= bookmarkGroup.getName() %></option>
+    <%
+        }
+    %>
+    </select>
+    <button type="submit">즐겨찾기 추가하기</button>
+</form>
 <p class="wifi-info">
     <table id="wifiService">
         <tr>
