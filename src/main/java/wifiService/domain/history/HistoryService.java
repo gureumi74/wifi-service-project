@@ -1,8 +1,11 @@
 package wifiService.domain.history;
 
+import wifiService.domain.location.Location;
+import wifiService.domain.location.LocationService;
 import wifiService.global.DataSourceConfig;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryService {
@@ -53,5 +56,68 @@ public class HistoryService {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<History> viewHistory() {
+        List<History> historyList = new ArrayList<>();
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String sql = "select * from history";
+
+            preparedStatement = connection.prepareStatement(sql);
+
+            // 쿼리 실행
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                History history = new History();
+                history.setHistoryId(rs.getInt("HISTORY_ID"));
+                history.setLocationId(rs.getInt("LOCATION_ID"));
+                history.setDistance(rs.getString("DISTANCE"));
+                history.setSearchedAt(rs.getTimestamp("SEARCHED_AT"));
+                history.setWifiId(rs.getInt("WIFI_ID"));
+
+                // list에 추가
+                historyList.add(history);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return historyList;
     }
 }
