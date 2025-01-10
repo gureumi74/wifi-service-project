@@ -46,7 +46,7 @@
     <label for="lnt">LNT:</label>
     <input type="text" id="lnt" placeholder="0.0" name="lnt">
     <button type="button" onclick="getLocation()">내 위치 가져오기</button>
-    <button id="wifi-info">근처 WIFI 정보 보기</button>
+    <button type="button" href="${pageContext.request.contextPath}/wifi-info.jsp">근처 WIFI 정보 보기</button>
 </form>
 <p>
     <a href="${pageContext.request.contextPath}/">홈</a>
