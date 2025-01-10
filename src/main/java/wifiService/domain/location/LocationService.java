@@ -1,6 +1,7 @@
 package wifiService.domain.location;
 
 import wifiService.domain.history.History;
+import wifiService.domain.wifi.Wifi;
 import wifiService.global.DataSourceConfig;
 
 import java.sql.*;
@@ -31,18 +32,14 @@ public class LocationService {
             rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                Integer locationId = rs.getInt("location_id");
-                double LAT = rs.getDouble("LAT");
-                double LNT = rs.getDouble("LNT");
-
                 Location location = new Location();
-                location.setId(locationId);
-                location.setLAT(LAT);
-                location.setLNT(LNT);
+                location.setId(rs.getInt("LOCATION_ID"));
+                location.setLAT(rs.getDouble("LAT"));
+                location.setLNT(rs.getDouble("LNT"));
+                location.setSavedAt(rs.getTimestamp("SAVED_AT"));
 
                 // list에 추가
                 locationList.add(location);
-                System.out.println(locationId + "번 위치 정보: " + LAT + " " + LNT + " ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -176,5 +173,116 @@ public class LocationService {
             }
         }
         return distanceList;
+    }
+
+    // 위치 정보 가져오기
+    public Location getLocation(Integer locationId) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Location location = new Location();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String sql = "select * from LOCATIONS where LOCATION_ID = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, locationId);
+
+            // 쿼리 실행
+            rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                location.setId(locationId);
+                location.setLAT(rs.getDouble("LAT"));
+                location.setLNT(rs.getDouble("LNT"));
+                location.setSavedAt(rs.getTimestamp("SAVED_AT"));
+            } else {
+                System.out.println("위치 정보 반환 실패");
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return location;
+    }
+
+    // 위치 정보 삭제하기 기능
+    public void deleteLocation(Integer locationId) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // 외래 키 제약 활성화
+            connection.createStatement().execute("pragma foreign_keys = on;");
+
+            // sql 쿼리
+            String sql = "delete from LOCATIONS where LOCATION_ID = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, locationId);
+
+            // 쿼리 실행 (executeUpdate는 결과 반환 x)
+            preparedStatement.executeUpdate();
+            System.out.println("삭제 성공");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("삭제 실패");
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
