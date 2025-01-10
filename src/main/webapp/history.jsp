@@ -94,18 +94,4 @@
     </table>
 </p>
 </body>
-<script>
-    function deleteLocation() {
-        // 삭제 완료 메시지 팝업
-        var confirmDelete = confirm("삭제가 완료되었습니다.")
-
-        if (confirmDelete) {
-            // 삭제 확인 시 페이지 새로 고침
-            setTimeout(function() {
-                location.reload(); // 새로고침
-            }, 2000);
-        }
-        return true;
-    }
-</script>
 </html>
