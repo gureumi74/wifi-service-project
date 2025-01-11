@@ -49,14 +49,17 @@
 <body>
 <%
     String wifiIdStr = request.getParameter("wifiId");
-    String distance = request.getParameter("distance");
-    System.out.println(wifiIdStr + " " + distance);
+    String historyIdStr = request.getParameter("historyId");
     Wifi wifi = null;
-    if (wifiIdStr != null && distance != null) {
+    History history = null;
+
+    if (wifiIdStr != null && historyIdStr != null) {
         Integer wifiId = Integer.parseInt(wifiIdStr);
+        Integer historyId = Integer.parseInt(historyIdStr);
         WifiApiService wifiApiService = new WifiApiService();
         wifi = wifiApiService.getWifiInfo(wifiId);
-        System.out.println(wifiId + " " + distance);
+        HistoryService historyService = new HistoryService();
+        history = historyService.getHistoryById(historyId);
     } else {
         System.out.println("디테일 정보 불러오기 실패");
     }
@@ -83,7 +86,7 @@
     <a href="${pageContext.request.contextPath}/bookmark-view.jsp">즐겨찾기 보기</a>
     <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">즐겨찾기 관리</a>
 </p>
-<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-add.jsp">
+<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-add.jsp?historyId=<%= history.getHistoryId() %>">
     <select if="bookmarkSelect" name="selectBookmark">
     <%
         for (BookmarkGroup bookmarkGroup : bookmarkList) {
@@ -99,7 +102,7 @@
     <table id="wifiService">
         <tr>
             <th>거리(km)</th>
-            <td><%= distance %></td>
+            <td><%= history.getDistance() %></td>
         <tr>
             <th>관리번호</th>
             <td><%= wifi.getMgrNo() %></td>

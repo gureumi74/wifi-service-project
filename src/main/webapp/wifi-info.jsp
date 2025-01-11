@@ -52,7 +52,9 @@
     // 위치 저장 후 리스트 받아오기
     List<History> wifiList = locationService.searchLocation(lat, lnt);
     HistoryService historyService = new HistoryService();
+    // 위치 저장
     historyService.insertHistory(wifiList);
+    wifiList = historyService.viewHistory();
 
 %>
 <h1>와이파이 정보 구하기</h1>
@@ -103,7 +105,7 @@
                     out.write("<td>" + wifi.getWrdofc() + "</td>");
                     %>
                     <td>
-                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?wifiId=<%= wifi.getWifiId() %>&distance=<%= history.getDistance() %>">
+                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?wifiId=<%= wifi.getWifiId() %>&historyId=<%= history.getHistoryId() %>">
                             <%= wifi.getWifiName() %>
                         </a>
                     </td>

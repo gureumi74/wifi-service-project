@@ -1,13 +1,17 @@
 package wifiService.domain.history;
 
+import wifiService.domain.wifi.Wifi;
+
 import java.sql.Timestamp;
 
 public class History {
     private Integer historyId;
     private Integer locationId;
     private Integer wifiId;
+    private Wifi wifi;
     private String distance;
     private Timestamp searchedAt;
+    private Integer bookmarkId; // 북마크 ID
 
     public Integer getHistoryId() {
         return historyId;
@@ -27,8 +31,6 @@ public class History {
 
     public Integer getLocationId() {
         return locationId;
-
-
     }
 
     public void setLocationId(Integer locationId) {
@@ -43,11 +45,27 @@ public class History {
         this.wifiId = wifiId;
     }
 
+    public Wifi getWifi() {
+        return wifi;
+    }
+
+    public void setWifi(Wifi wifi) {
+        this.wifi = wifi;
+    }
+
     public Timestamp getSearchedAt() {
         return searchedAt;
     }
 
     public void setSearchedAt(Timestamp searchedAt) {
         this.searchedAt = searchedAt;
+    }
+
+    public Integer getBookmarkId() {
+        return bookmarkId;
+    }
+
+    public void setBookmarkId(Integer bookmarkId) {
+        this.bookmarkId = bookmarkId;
     }
 }
