@@ -13,5 +13,5 @@
 %>
 <script>
     alert("북마크 추가 완료!");
-    location.href='${pageContext.request.contextPath}/bookmark-view.jsp';
+    history.back();
 </script>
