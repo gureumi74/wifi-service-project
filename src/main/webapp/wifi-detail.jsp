@@ -66,9 +66,6 @@
 
     BookmarkService bookmarkService = new BookmarkService();
     List<BookmarkGroup> bookmarkList = bookmarkService.viewBookmarkGroup();
-    System.out.println(bookmarkList.get(0).getName());
-
-    System.out.println(wifi.getWifiName());
 %>
 <h1>와이파이 정보 구하기</h1>
 <form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
@@ -86,19 +83,30 @@
     <a href="${pageContext.request.contextPath}/bookmark-view.jsp">즐겨찾기 보기</a>
     <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">즐겨찾기 관리</a>
 </p>
-<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-add.jsp">
+<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-add.jsp" onsubmit="return checkBookmarkForm()">
     <select if="bookmarkId" name="bookmarkId">
-    <%
-        for (BookmarkGroup bookmarkGroup : bookmarkList) {
-    %>
-        <option value="<%= bookmarkGroup.getGroupId() %>"><%= bookmarkGroup.getName() %></option>
-    <%
-        }
-    %>
+        <option value="" selected>북마크 그룹 선택</option>
+        <% for (BookmarkGroup bookmarkGroup : bookmarkList) { %>
+            <option value="<%= bookmarkGroup.getGroupId() %>"><%= bookmarkGroup.getName() %></option>
+        <% } %>
     </select>
     <input type="hidden" name="historyId" value="<%= history.getHistoryId() %>">
     <button type="submit">즐겨찾기 추가하기</button>
 </form>
+<script>
+    // 북마크 그룹 선택시에만 제출 가능하도록 설정
+    function checkBookmarkForm() {
+        const bookmarkSelect = document.querySelector('select[name="bookmarkId"]');
+        const selectedValue = bookmarkSelect.value;
+
+        if (selectedValue === "") {
+            alert("북마크 그룹을 선택해주세요.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
 <p class="wifi-info">
     <table id="wifiService">
         <tr>
