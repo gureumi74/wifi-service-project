@@ -92,7 +92,7 @@
                     out.write("<td>" + bookmark.getCreatedAt() + "</td>");
                     %>
                     <td>
-                   <a href="${pageContext.request.contextPath}/bookmark-delete.jsp">삭제</a>
+                   <a href="${pageContext.request.contextPath}/bookmark-delete.jsp?id=<%= bookmark.getBookmarkId() %>">삭제</a>
                     </td>
                     <%
                     out.write("</tr>");
