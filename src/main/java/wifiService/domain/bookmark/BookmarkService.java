@@ -123,4 +123,52 @@ public class BookmarkService {
             }
         }
     }
+
+    public void insertBookmarkHistory(Integer bookmarkId, Integer historyId) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String insertSql = "insert into BOOKMARK (CREATED_AT, GROUP_ID, HISTORY_ID) " +
+                    "values (?, ?, ?)";
+
+            preparedStatement = connection.prepareStatement(insertSql);
+            preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setInt(2, bookmarkId);
+            preparedStatement.setInt(3, historyId);
+
+            int affected = preparedStatement.executeUpdate();
+
+            if (affected > 0) {
+                System.out.println("북마크 추가 완료");
+            } else {
+                System.out.println("북마크 추가 실패");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -86,16 +86,17 @@
     <a href="${pageContext.request.contextPath}/bookmark-view.jsp">즐겨찾기 보기</a>
     <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">즐겨찾기 관리</a>
 </p>
-<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-add.jsp?historyId=<%= history.getHistoryId() %>">
-    <select if="bookmarkSelect" name="selectBookmark">
+<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-add.jsp">
+    <select if="bookmarkId" name="bookmarkId">
     <%
         for (BookmarkGroup bookmarkGroup : bookmarkList) {
     %>
-        <option value="<%= bookmarkGroup.getName() %>"><%= bookmarkGroup.getName() %></option>
+        <option value="<%= bookmarkGroup.getGroupId() %>"><%= bookmarkGroup.getName() %></option>
     <%
         }
     %>
     </select>
+    <input type="hidden" name="historyId" value="<%= history.getHistoryId() %>">
     <button type="submit">즐겨찾기 추가하기</button>
 </form>
 <p class="wifi-info">
