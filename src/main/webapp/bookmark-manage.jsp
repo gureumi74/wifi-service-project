@@ -64,7 +64,9 @@
     <a href="${pageContext.request.contextPath}/bookmark-view.jsp">즐겨찾기 보기</a>
     <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">즐겨찾기 관리</a>
 </p>
-<button type="summit">북마크 이름 추가</button>
+<form action="${pageContext.request.contextPath}/bookmark-group-create.jsp">
+    <button type="summit">북마크 그룹 이름 추가</button>
+</form>
 <p class="wifi-info">
     <table id="wifiService">
         <tr>
@@ -83,11 +85,15 @@
                     out.write("<td>" + bookmarkGroup.getName() + "</td>");
                     out.write("<td>" + bookmarkGroup.getBookmarkNo() + "</td>");
                     out.write("<td>" + bookmarkGroup.getCreatedAt() + "</td>");
-                    out.write("<td>" + bookmarkGroup.getUpdatedAt() + "</td>");
+                    if(bookmarkGroup.getUpdatedAt() != null) {
+                        out.write("<td>" + bookmarkGroup.getUpdatedAt() + "</td>");
+                    } else {
+                        out.write("<td> </td>");
+                    }
                     %>
                     <td>
-                   <a href="${pageContext.request.contextPath}/bookmark-update.jsp">수정 </a>
-                   <a href="${pageContext.request.contextPath}/bookmark-delete.jsp">삭제</a>
+                   <a href="${pageContext.request.contextPath}/bookmark-group-update.jsp">수정 </a>
+                   <a href="${pageContext.request.contextPath}/bookmark-group-delete.jsp">삭제</a>
                     </td>
                     <%
                     out.write("</tr>");
