@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class Bookmark {
     private Integer bookMarkId;
-    private Timestamp createAt;
+    private Timestamp createdAt;
     private Integer groupId;
     private String groupName;
     private Integer historyId;
@@ -18,12 +18,12 @@ public class Bookmark {
         this.bookMarkId = bookMarkId;
     }
 
-    public Timestamp getCreateAt() {
-        return createAt;
+    public Timestamp getCreatdeAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Timestamp createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Timestamp createAt) {
+        this.createdAt = createAt;
     }
 
     public Integer getGroupId() {
