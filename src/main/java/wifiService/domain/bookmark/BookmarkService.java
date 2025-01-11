@@ -171,4 +171,69 @@ public class BookmarkService {
             }
         }
     }
+
+    // 북마크 id 를 가지고 북마크 정보 가져오기
+    public BookmarkGroup getBookmarkById(Integer bookmarkGroupId) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        BookmarkGroup bookmarkGroup = new BookmarkGroup();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String sql = "select * from BOOKMARK_GROUP where GROUP_ID = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, bookmarkGroupId);
+
+            // 쿼리 실행
+            rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                bookmarkGroup.setGroupId(rs.getInt("GROUP_ID"));
+                bookmarkGroup.setName(rs.getString("NAME"));
+                bookmarkGroup.setBookmarkNo(rs.getInt("BOOKMARK_NO"));
+                bookmarkGroup.setCreatedAt(rs.getTimestamp("CREATED_AT"));
+                bookmarkGroup.setUpdatedAt(rs.getTimestamp("UPDATED_AT"));
+            } else {
+                System.out.println("북마크 그룹 정보 불러오기 성공");
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return bookmarkGroup;
+    }
 }
