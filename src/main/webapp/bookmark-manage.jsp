@@ -92,7 +92,7 @@
                     }
                     %>
                     <td>
-                   <a href="${pageContext.request.contextPath}/bookmark-group-update.jsp">수정 </a>
+                   <a href="${pageContext.request.contextPath}/bookmark-group-update.jsp?id=<%= bookmarkGroup.getGroupId() %>">수정 </a>
                    <a href="${pageContext.request.contextPath}/bookmark-group-delete.jsp">삭제</a>
                     </td>
                     <%

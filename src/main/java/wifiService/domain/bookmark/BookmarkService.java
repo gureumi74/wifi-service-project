@@ -304,4 +304,53 @@ public class BookmarkService {
         }
         return bookmarkList;
     }
+
+    // 북마크 그룹 수정
+    public void updateBookmarkGroup(Integer bookmarkGroupId, String newGroupName, Integer newGroupNo) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String insertSql = "update BOOKMARK_GROUP set NAME = ?, BOOKMARK_NO = ?, UPDATED_AT = ? where GROUP_ID = ?";
+
+            preparedStatement = connection.prepareStatement(insertSql);
+            preparedStatement.setString(1, newGroupName);
+            preparedStatement.setInt(2, newGroupNo);
+            preparedStatement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setInt(4, bookmarkGroupId);
+
+            int affected = preparedStatement.executeUpdate();
+
+            if (affected > 0) {
+                System.out.println("북마크 수정 완료");
+            } else {
+                System.out.println("북마크 수정 실패");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
