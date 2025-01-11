@@ -1,6 +1,7 @@
 package wifiService.domain.bookmark;
 
 import wifiService.domain.history.History;
+import wifiService.domain.history.HistoryService;
 import wifiService.domain.wifi.Wifi;
 import wifiService.global.DataSourceConfig;
 
@@ -235,5 +236,72 @@ public class BookmarkService {
         }
 
         return bookmarkGroup;
+    }
+
+        public List<Bookmark> viewBookmark() {
+        List<Bookmark> bookmarkList = new ArrayList<>();
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String sql = "select * from bookmark";
+
+            preparedStatement = connection.prepareStatement(sql);
+
+            // 쿼리 실행
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Bookmark bookmark = new Bookmark();
+                bookmark.setBookMarkId(rs.getInt("BOOKMARK_ID"));
+                bookmark.setCreatedAt(rs.getTimestamp("CREATED_AT"));
+                bookmark.setGroupId(rs.getInt("GROUP_ID"));
+                bookmark.setHistoryId(rs.getInt("HISTORY_ID"));
+
+                BookmarkGroup bookmarkGroup = getBookmarkById(bookmark.getGroupId());
+                HistoryService historyService = new HistoryService();
+                History history = historyService.getHistoryById(bookmark.getHistoryId());
+
+                bookmark.setGroupName(bookmarkGroup.getName());
+                bookmark.setWifiName(history.getWifi().getWifiName());
+
+                bookmarkList.add(bookmark);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return bookmarkList;
     }
 }
