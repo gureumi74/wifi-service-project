@@ -65,7 +65,7 @@
     }
 
     BookmarkService bookmarkService = new BookmarkService();
-    List<BookmarkGroup> bookmarkList = bookmarkService.viewBookmark();
+    List<BookmarkGroup> bookmarkList = bookmarkService.viewBookmarkGroup();
     System.out.println(bookmarkList.get(0).getName());
 
     System.out.println(wifi.getWifiName());
