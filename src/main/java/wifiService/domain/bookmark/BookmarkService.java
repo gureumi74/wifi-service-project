@@ -1,9 +1,12 @@
 package wifiService.domain.bookmark;
 
+import wifiService.domain.history.History;
+import wifiService.domain.wifi.Wifi;
 import wifiService.global.DataSourceConfig;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BookmarkService {
@@ -39,6 +42,9 @@ public class BookmarkService {
                 // list에 추가
                 bookmarkGroupsList.add(bookmarkGroup);
             }
+
+            // 순서대로 정렬 후 반환
+            Collections.sort(bookmarkGroupsList, (x, y) -> x.getBookmarkNo() - y.getBookmarkNo());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
