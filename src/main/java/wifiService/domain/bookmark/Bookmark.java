@@ -1,24 +1,26 @@
 package wifiService.domain.bookmark;
 
+import wifiService.domain.wifi.Wifi;
+
 import java.sql.Timestamp;
 
 public class Bookmark {
-    private Integer bookMarkId;
+    private Integer bookmarkId;
     private Timestamp createdAt;
     private Integer groupId;
     private String groupName;
     private Integer historyId;
     private String wifiName;
 
-    public Integer getBookMarkId() {
-        return bookMarkId;
+    public Integer getBookmarkId() {
+        return bookmarkId;
     }
 
-    public void setBookMarkId(Integer bookMarkId) {
-        this.bookMarkId = bookMarkId;
+    public void setBookMarkId(Integer bookmarkId) {
+        this.bookmarkId = bookmarkId;
     }
 
-    public Timestamp getCreatdeAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
