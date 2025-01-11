@@ -2,6 +2,7 @@ package wifiService.domain.history;
 
 import wifiService.domain.location.Location;
 import wifiService.domain.location.LocationService;
+import wifiService.domain.wifi.WifiApiService;
 import wifiService.global.DataSourceConfig;
 
 import java.sql.*;
@@ -87,6 +88,9 @@ public class HistoryService {
                 history.setSearchedAt(rs.getTimestamp("SEARCHED_AT"));
                 history.setWifiId(rs.getInt("WIFI_ID"));
 
+                WifiApiService wifiApiService = new WifiApiService();
+                history.setWifi(wifiApiService.getWifiInfo(history.getWifiId()));
+
                 // list에 추가
                 historyList.add(history);
             }
@@ -119,5 +123,66 @@ public class HistoryService {
         }
 
         return historyList;
+    }
+
+    public History getHistoryById(Integer historyId) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        History history = new History();
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // sql 쿼리
+            String sql = "select * from history where HISTORY_ID = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, historyId);
+
+            // 쿼리 실행
+            rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                history.setHistoryId(rs.getInt("HISTORY_ID"));
+                history.setLocationId(rs.getInt("LOCATION_ID"));
+                history.setDistance(rs.getString("DISTANCE"));
+                history.setSearchedAt(rs.getTimestamp("SEARCHED_AT"));
+                history.setWifiId(rs.getInt("WIFI_ID"));
+            } else {
+                System.out.println("히스토리 조회 실패");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return history;
     }
 }
