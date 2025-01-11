@@ -59,7 +59,7 @@
             bookmarkService.updateBookmarkGroup(bookmarkGroupId, requestBookmarkGroupName, newGroupNo);
 
             // 성공 메시지 출력 및 북마크 페이지로 이동
-            out.println("<script>alert('북마크 그룹이 수정되었습니다.'); location.href='" + request.getContextPath() + "/bookmark-manage.jsp';</script>");
+            out.println("<script>alert('북마크 그룹을 수정하였습니다.'); location.href='" + request.getContextPath() + "/bookmark-manage.jsp';</script>");
         }
 %>
 <h1>와이파이 정보 구하기</h1>

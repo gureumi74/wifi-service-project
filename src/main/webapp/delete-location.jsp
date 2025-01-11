@@ -9,6 +9,6 @@
     }
 %>
 <script>
-    alert("위치 삭제 완료!");
+    alert("위치 정보를 삭제하였습니다.");
     location.href='${pageContext.request.contextPath}/history.jsp';
 </script>

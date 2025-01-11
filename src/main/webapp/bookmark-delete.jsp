@@ -8,6 +8,6 @@
     }
 %>
 <script>
-    alert("북마크 삭제 완료!");
+    alert("북마크 정보를 삭제했습니다.");
     location.href='${pageContext.request.contextPath}/bookmark-view.jsp';
 </script>
