@@ -153,6 +153,9 @@ public class HistoryService {
                 history.setDistance(rs.getString("DISTANCE"));
                 history.setSearchedAt(rs.getTimestamp("SEARCHED_AT"));
                 history.setWifiId(rs.getInt("WIFI_ID"));
+
+                WifiApiService wifiApiService = new WifiApiService();
+                history.setWifi(wifiApiService.getWifiInfo(history.getWifiId()));
             } else {
                 System.out.println("히스토리 조회 실패");
             }
