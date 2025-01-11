@@ -353,4 +353,51 @@ public class BookmarkService {
             }
         }
     }
+
+    // 북마크 그룹 삭제
+    public void deleteBookmarkGroup(Integer bookmarkGroupId) {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        String url = dataSourceConfig.sqliteDriveLoad();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        // 커넥션 객체 생성
+        try {
+            connection = DriverManager.getConnection(url);
+
+            // 외래 키 제약 활성화
+            connection.createStatement().execute("pragma foreign_keys = on;");
+
+            // sql 쿼리
+            String sql = "delete from BOOKMARK_GROUP where GROUP_ID = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, bookmarkGroupId);
+
+            // 쿼리 실행 (executeUpdate는 결과 반환 x)
+            preparedStatement.executeUpdate();
+            System.out.println("북마크 그룹 삭제 성공");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("북마크 그룹 삭제 실패");
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
