@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="index.js" defer></script>
-    <title>Title</title>
+    <title>북마크 그룹</title>
     <style>
         #wifiService {
         font-family: Arial, Helvetica, sans-serif;
@@ -56,7 +56,7 @@
         out.println("<script>alert('북마크 그룹이 생성되었습니다.'); location.href='" + request.getContextPath() + "/bookmark-manage.jsp';</script>");
     }
 %>
-<h1>와이파이 정보 구하기</h1>
+<h1>북마크 그룹 정보</h1>
 <form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
     <label for="lat">LAT:</label>
     <input type="text" id="lat" placeholder="0.0" name="lat">

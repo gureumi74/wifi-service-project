@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="index.js" defer></script>
-    <title>Title</title>
+    <title>와이파이 상세정보</title>
     <style>
         #wifiService {
         font-family: Arial, Helvetica, sans-serif;
@@ -67,7 +67,7 @@
     BookmarkService bookmarkService = new BookmarkService();
     List<BookmarkGroup> bookmarkList = bookmarkService.viewBookmarkGroup();
 %>
-<h1>와이파이 정보 구하기</h1>
+<h1>와이파이 상세 정보</h1>
 <form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
     <label for="lat">LAT:</label>
     <input type="text" id="lat" placeholder="0.0" name="lat">
