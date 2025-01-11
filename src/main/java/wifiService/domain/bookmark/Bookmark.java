@@ -8,6 +8,7 @@ public class Bookmark {
     private Integer groupId;
     private String groupName;
     private Integer historyId;
+    private String wifiName;
 
     public Integer getBookMarkId() {
         return bookMarkId;
@@ -47,5 +48,13 @@ public class Bookmark {
 
     public void setHistoryId(Integer historyId) {
         this.historyId = historyId;
+    }
+
+    public String getWifiName() {
+        return wifiName;
+    }
+
+    public void setWifiName(String wifiName) {
+        this.wifiName = wifiName;
     }
 }
