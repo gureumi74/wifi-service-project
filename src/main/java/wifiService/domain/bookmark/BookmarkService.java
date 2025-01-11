@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class BookmarkService {
-    public List<BookmarkGroup> viewBookmark() {
+    public List<BookmarkGroup> viewBookmarkGroup() {
         List<BookmarkGroup> bookmarkGroupsList = new ArrayList<>();
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         String url = dataSourceConfig.sqliteDriveLoad();

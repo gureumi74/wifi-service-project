@@ -45,7 +45,7 @@
 <%
 	BookmarkService bookmarkService = new BookmarkService();
     // 북마크 그룹 리스트 가져오기
-    List<BookmarkGroup> groupList = bookmarkService.viewBookmark();
+    List<BookmarkGroup> groupList = bookmarkService.viewBookmarkGroup();
 
 %>
 <h1>와이파이 정보 구하기</h1>
