@@ -122,7 +122,11 @@
         </tr>
         <tr>
             <th>와이파이명</th>
-            <td><%= wifi.getWifiName() %></td>
+            <td>
+                <a href="${pageContext.request.contextPath}/wifi-detail.jsp?wifiId=<%= history.getWifiId() %>&historyId=<%= history.getHistoryId() %>">
+                    <%= wifi.getWifiName() %>
+                </a>
+            </td>
         </tr>
         <tr>
             <th>도로명주소</th>
