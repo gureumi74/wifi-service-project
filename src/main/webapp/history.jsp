@@ -72,7 +72,7 @@
             <th>비고</th>
         </tr>
         <tbody>
-            <%
+            <% if (!locationList.isEmpty()) {
                 for (Location location : locationList) {
             %>
             <tr>
@@ -89,6 +89,9 @@
             </tr>
             <%
                 }
+            } else {
+                out.write("<tr> <td colspan='17' class='centered'>히스토리 정보가 존재하지 않습니다.</td> </tr>");
+            }
             %>
         </tbody>
     </table>
