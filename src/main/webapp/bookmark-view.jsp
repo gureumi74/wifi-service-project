@@ -74,7 +74,7 @@
             <th>비고</th>
         </tr>
         <tbody>
-            <%
+            <% if (!list.isEmpty()) {
                 for (Bookmark bookmark : list) {
                     out.write("<tr>");
                     out.write("<td>" + bookmark.getBookmarkId() + "</td>");
@@ -97,6 +97,9 @@
                     <%
                     out.write("</tr>");
                 }
+            } else {
+                out.write("<tr> <td colspan='17' class='centered'>북마크 정보가 존재하지 않습니다.</td> </tr>");
+            }
             %>
         </tbody>
     </table>

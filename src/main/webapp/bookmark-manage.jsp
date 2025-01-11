@@ -99,7 +99,7 @@
                     out.write("</tr>");
                 }
             } else {
-                out.write("<tr> <td colspan='17' class='centered'>북마크 정보가 존재하지 않습니다.</td> </tr>");
+                out.write("<tr> <td colspan='17' class='centered'>북마크 그룹 정보가 존재하지 않습니다.</td> </tr>");
             } %>
         </tbody>
     </table>

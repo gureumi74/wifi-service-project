@@ -82,9 +82,12 @@
             <th>순서</th>
             <td><input type="text" id="bookmarkGroupNo" name="bookmarkGroupNo"></td>
         </tr>
+        <td colspan="15" class="centered">
+            <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">돌아가기</a>
+            <button type="submit">추가</button>
+        </td>
     </table>
-    <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">돌아가기</a>
-    <button type="submit">추가</button>
+
 </form>
 <script>
     // 값이 모두 들어왔을 때만 create 전송하기
