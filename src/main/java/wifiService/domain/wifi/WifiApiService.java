@@ -83,7 +83,7 @@ public class WifiApiService {
             // 1부터 1000까지의 JSON 객체를 하나씩 돌면서 DB에 저장
             wifiDataArray.forEach(x -> {
                 Wifi wifi = parseWifi(x.getAsJsonObject());
-                wifiApiRepository.save(wifi);
+                wifiApiRepository.saveWifi(wifi);
             });
 
             startPage += 1000;
