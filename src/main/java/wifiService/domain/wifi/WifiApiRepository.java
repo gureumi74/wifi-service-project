@@ -43,10 +43,9 @@ public class WifiApiRepository {
                 "X_SWIFI_SVC_SE, X_SWIFI_CMCWR, X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, X_SWIFI_REMARS3, LAT, LNT, WORK_DTTM) " +
                 "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-        try (Connection connection = DriverManager.getConnection(url)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(url);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, wifi.getMgrNo());
             preparedStatement.setString(2, wifi.getWrdofc());
             preparedStatement.setString(3, wifi.getWifiName());
@@ -84,6 +83,7 @@ public class WifiApiRepository {
 
                 if (rs.next()) {
                     wifi = new Wifi();
+                    wifi.setId(id);
                     wifi.setMgrNo(rs.getString("X_SWIFI_MGR_NO"));
                     wifi.setWrdofc(rs.getString("X_SWIFI_WRDOFC"));
                     wifi.setWifiName(rs.getString("X_SWIFI_MAIN_NM"));

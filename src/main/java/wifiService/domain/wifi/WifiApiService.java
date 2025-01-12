@@ -6,12 +6,8 @@ import com.google.gson.JsonParser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import wifiService.domain.location.LocationService;
-import wifiService.global.DataSourceConfig;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class WifiApiService {
     private final WifiApiRepository wifiApiRepository = new WifiApiRepository();
@@ -30,7 +26,11 @@ public class WifiApiService {
                 // 파싱
                 JsonObject jsonObject = JsonParser.parseString(jsonData).getAsJsonObject();
                 JsonObject wifiInfo = jsonObject.getAsJsonObject("TbPublicWifiInfo");
-                return wifiInfo.getAsJsonArray("row");
+                if (wifiInfo != null) {
+                    return wifiInfo.getAsJsonArray("row");
+                } else {
+                    System.out.println("더 이상 데이터가 없습니다.");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
