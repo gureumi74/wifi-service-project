@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="wifiService.domain.location.Location" %>
-<%@ page import="wifiService.domain.location.LocationService" %>
+<%@ page import="wifiService.domain.history.History" %>
+<%@ page import="wifiService.domain.history.HistoryService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,8 +43,8 @@
 </head>
 <body>
 <%
-    LocationService locationService = new LocationService();
-    List<Location> locationList = locationService.viewList();
+    HistoryService historyService = new HistoryService();
+    List<History> list = historyService.viewHistory();
 %>
 <h1>히스토리 정보</h1>
 <form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
@@ -72,17 +72,17 @@
             <th>비고</th>
         </tr>
         <tbody>
-            <% if (!locationList.isEmpty()) {
-                for (Location location : locationList) {
+            <% if (!list.isEmpty()) {
+                for (History history : list) {
             %>
             <tr>
-                <td><%= location.getId() %></td>
-                <td><%= location.getLAT() %></td>
-                <td><%= location.getLNT() %></td>
-                <td><%= location.getSavedAt() %></td>
+                <td><%= history.getId() %></td>
+                <td><%= history.getLAT() %></td>
+                <td><%= history.getLNT() %></td>
+                <td><%= history.getSearchedAt() %></td>
                 <td>
                     <form action="${pageContext.request.contextPath}/delete-location.jsp">
-                        <input type="hidden" name="locationId" value="<%= location.getId() %>">
+                        <input type="hidden" name="id" value="<%= history.getId() %>">
                         <button type="submit">삭제<button>
                     </form>
                 </td>
