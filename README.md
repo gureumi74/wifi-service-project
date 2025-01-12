@@ -8,6 +8,7 @@
 - **IDE** : IntelliJ IDEA (Community Edition)
 - **빌드 도구** : Gradle
 - **서버** : Tomcat 8.5
+- **사용 언어** : Java
 - **버전 관리** : Git
 - **라이브러리 및 기술** :
   - OkHttp (Http 클라이언트)
