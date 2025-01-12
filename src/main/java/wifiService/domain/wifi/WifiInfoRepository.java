@@ -140,4 +140,29 @@ public class WifiInfoRepository {
         }
         return wifi;
     }
+
+    // Wifi-Info 보기
+    public WifiInfo findWifiInfoById(Integer id) {
+        String sql = "SELECT * FROM WIFI_INFO WHERE WIFI_INFO_ID = ?";
+        WifiInfo wifiInfo = null;
+
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    wifiInfo = new WifiInfo();
+                    wifiInfo.setId(id);
+                    wifiInfo.setHistoryId(rs.getInt("HISTORY_ID"));
+                    wifiInfo.setWifiId(rs.getInt("WIFI_ID"));
+                    wifiInfo.setDistance(rs.getString("DISTANCE"));
+                    wifiInfo.setSearchedAt(rs.getTimestamp("SEARCHED_AT"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wifiInfo;
+    }
 }

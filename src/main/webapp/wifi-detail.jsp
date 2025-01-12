@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="wifiService.domain.wifi.Wifi" %>
-<%@ page import="wifiService.domain.location.LocationService" %>
-<%@ page import="wifiService.domain.wifi.WifiApiService" %>
+<%@ page import="wifiService.domain.wifi.WifiInfoDetail" %>
+<%@ page import="wifiService.domain.wifi.WifiInfoService" %>
 <%@ page import="wifiService.domain.history.History" %>
 <%@ page import="wifiService.domain.history.HistoryService" %>
 <%@ page import="wifiService.domain.bookmark.BookmarkGroup" %>
@@ -48,22 +47,13 @@
 </head>
 <body>
 <%
-    String wifiIdStr = request.getParameter("wifiId");
-    String historyIdStr = request.getParameter("historyId");
-    Wifi wifi = null;
-    History history = null;
+    Integer id = Integer.parseInt(request.getParameter("id"));
+    WifiInfoDetail wifiInfoDetail = null;
 
-    if (wifiIdStr != null && historyIdStr != null) {
-        Integer wifiId = Integer.parseInt(wifiIdStr);
-        Integer historyId = Integer.parseInt(historyIdStr);
-        WifiApiService wifiApiService = new WifiApiService();
-        wifi = wifiApiService.getWifiInfo(wifiId);
-        HistoryService historyService = new HistoryService();
-        history = historyService.getHistoryById(historyId);
-    } else {
-        System.out.println("디테일 정보 불러오기 실패");
+    if (id != null) {
+        WifiInfoService wifiInfoService = new WifiInfoService();
+        wifiInfoDetail = wifiInfoService.findWifiInfoById(id);
     }
-
     BookmarkService bookmarkService = new BookmarkService();
     List<BookmarkGroup> bookmarkList = bookmarkService.viewBookmarkGroup();
 %>
@@ -90,7 +80,7 @@
             <option value="<%= bookmarkGroup.getGroupId() %>"><%= bookmarkGroup.getName() %></option>
         <% } %>
     </select>
-    <input type="hidden" name="historyId" value="<%= history.getHistoryId() %>">
+    <input type="hidden" name="historyId" value="<%= wifiInfoDetail.getHistory().getId() %>">
     <button type="submit">즐겨찾기 추가하기</button>
 </form>
 <script>
@@ -111,74 +101,74 @@
     <table id="wifiService">
         <tr>
             <th>거리(km)</th>
-            <td><%= history.getDistance() %></td>
+            <td><%= wifiInfoDetail.getDistance() %></td>
         <tr>
             <th>관리번호</th>
-            <td><%= wifi.getMgrNo() %></td>
+            <td><%= wifiInfoDetail.getWifi().getMgrNo() %></td>
         </tr>
         <tr>
             <th>자치구</th>
-            <td><%= wifi.getWrdofc() %></td>
+            <td><%= wifiInfoDetail.getWifi().getWrdofc() %></td>
         </tr>
         <tr>
             <th>와이파이명</th>
             <td>
-                <a href="${pageContext.request.contextPath}/wifi-detail.jsp?wifiId=<%= history.getWifiId() %>&historyId=<%= history.getHistoryId() %>">
-                    <%= wifi.getWifiName() %>
+                <a href="${pageContext.request.contextPath}/wifi-detail.jsp?id=<%= wifiInfoDetail.getId() %>">
+                    <%= wifiInfoDetail.getWifi().getWifiName() %>
                 </a>
             </td>
         </tr>
         <tr>
             <th>도로명주소</th>
-            <td><%= wifi.getAddress1() %></td>
+            <td><%= wifiInfoDetail.getWifi().getAddress1() %></td>
         </tr>
         <tr>
             <th>상세주소</th>
-            <td><%= wifi.getAddress2() %></td>
+            <td><%= wifiInfoDetail.getWifi().getAddress2() %></td>
         </tr>
         <tr>
             <th>설치위치(층)</th>
-            <td><%= wifi.getInstlFloor() %></td>
+            <td><%= wifiInfoDetail.getWifi().getInstlFloor() %></td>
         </tr>
         <tr>
             <th>설치유형</th>
-            <td><%= wifi.getInstlTy() %></td>
+            <td><%= wifiInfoDetail.getWifi().getInstlTy() %></td>
         </tr>
         <tr>
             <th>설치기관</th>
-            <td><%= wifi.getInstlMby() %></td>
+            <td><%= wifiInfoDetail.getWifi().getInstlMby() %></td>
         </tr>
         <tr>
             <th>서비스구분</th>
-            <td><%= wifi.getSvcSe() %></td>
+            <td><%= wifiInfoDetail.getWifi().getSvcSe() %></td>
         </tr>
         <tr>
             <th>망종류</th>
-            <td><%= wifi.getCmcwr() %></td>
+            <td><%= wifiInfoDetail.getWifi().getCmcwr() %></td>
         </tr>
         <tr>
             <th>설치년도</th>
-            <td><%= wifi.getCnstcYear() %></td>
+            <td><%= wifiInfoDetail.getWifi().getCnstcYear() %></td>
         </tr>
         <tr>
             <th>실내외구분</th>
-            <td><%= wifi.getInoutDoor() %></td>
+            <td><%= wifiInfoDetail.getWifi().getInoutDoor() %></td>
         </tr>
         <tr>
             <th>와이파이접속환경</th>
-            <td><%= wifi.getRemars() %></td>
+            <td><%= wifiInfoDetail.getWifi().getRemars() %></td>
         </tr>
         <tr>
             <th>X좌표</th>
-            <td><%= wifi.getWifiLAT() %></td>
+            <td><%= wifiInfoDetail.getWifi().getWifiLAT() %></td>
         </tr>
         <tr>
             <th>Y좌표</th>
-            <td><%= wifi.getWifiLNT() %></td>
+            <td><%= wifiInfoDetail.getWifi().getWifiLNT() %></td>
         </tr>
         <tr>
             <th>작업일자</th>
-            <td><%= wifi.getWorkDttm() %></td>
+            <td><%= wifiInfoDetail.getWifi().getWorkDttm() %></td>
         </tr>
     </table>
 </p>

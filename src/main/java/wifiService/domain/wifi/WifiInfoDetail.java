@@ -6,7 +6,7 @@ import wifiService.domain.history.History;
 import java.sql.Timestamp;
 
 @Data
-public class WifiInfoDto {
+public class WifiInfoDetail {
     private Integer id; // Wifi_Info id
     private History history; // 히스토리 (위치)
     private Wifi wifi; // 와이파이 정보

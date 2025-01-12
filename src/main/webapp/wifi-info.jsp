@@ -2,7 +2,7 @@
 <%@ page import="wifiService.domain.wifi.Wifi" %>
 <%@ page import="wifiService.domain.history.HistoryService" %>
 <%@ page import="wifiService.domain.wifi.WifiApiService" %>
-<%@ page import="wifiService.domain.wifi.WifiInfoDto" %>
+<%@ page import="wifiService.domain.wifi.WifiInfoDetail" %>
 <%@ page import="wifiService.domain.wifi.WifiInfoService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -55,7 +55,7 @@
     // 가까운 와이파이 20개 저장 + 가져오기
     WifiInfoService wifiInfoService = new WifiInfoService();
     wifiInfoService.find20AndSaveWifiInfo(lat, lnt, historyId);
-    List<WifiInfoDto> wifiList = wifiInfoService.wifiInfo20(historyId);
+    List<WifiInfoDetail> wifiList = wifiInfoService.wifiInfo20(historyId);
 %>
 <h1>와이파이 정보</h1>
 <form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
@@ -96,31 +96,31 @@
         </tr>
         <tbody>
             <%
-                for (WifiInfoDto wifiInfoDto : wifiList) {
+                for (WifiInfoDetail wifiInfoDetail: wifiList) {
                     out.write("<tr>");
-                    out.write("<td>" + wifiInfoDto.getDistance() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getMgrNo() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getWrdofc() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getDistance() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getMgrNo() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getWrdofc() + "</td>");
                     %>
                     <td>
-                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?wifiId=<%= wifiInfoDto.getWifi().getId() %>&historyId=<%= historyId %>">
-                            <%= wifiInfoDto.getWifi().getWifiName() %>
+                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?id=<%= wifiInfoDetail.getId() %>">
+                            <%= wifiInfoDetail.getWifi().getWifiName() %>
                         </a>
                     </td>
                     <%
-                    out.write("<td>" + wifiInfoDto.getWifi().getAddress1() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getAddress2() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getInstlFloor() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getInstlTy() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getInstlMby() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getSvcSe() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getCmcwr() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getCnstcYear() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getInoutDoor() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getRemars() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getWifiLAT() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getWifiLNT() + "</td>");
-                    out.write("<td>" + wifiInfoDto.getWifi().getWorkDttm() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getAddress1() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getAddress2() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getInstlFloor() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getInstlTy() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getInstlMby() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getSvcSe() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getCmcwr() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getCnstcYear() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getInoutDoor() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getRemars() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getWifiLAT() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getWifiLNT() + "</td>");
+                    out.write("<td>" + wifiInfoDetail.getWifi().getWorkDttm() + "</td>");
                     out.write("</tr>");
                 }
             %>
