@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="wifiService.domain.wifi.WifiApiService" %>
+<%@ page import="wifiService.domain.wifi.WifiApiRepository" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +18,11 @@
 <body>
 <%
     WifiApiService wifiApiService = new WifiApiService();
-    wifiApiService.wifiApiLoad();
-    int dataCnt = wifiApiService.getEndPage();
+    WifiApiRepository wifiApiRepository = new WifiApiRepository();
+    wifiApiService.loadAndSaveWifiData();
+    int wifiCnt = wifiApiRepository.getWifiCnt();
 %>
-<h1><%= dataCnt %>개의 WIFI 정보를 정상적으로 저장하였습니다. </h1>
+<h1><%= wifiCnt %>개의 WIFI 정보를 정상적으로 저장하였습니다. </h1>
 <a href="${pageContext.request.contextPath}/">홈 으로 가기</a>
 </body>
 </html>

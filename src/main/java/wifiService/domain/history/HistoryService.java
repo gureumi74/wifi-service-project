@@ -2,6 +2,7 @@ package wifiService.domain.history;
 
 import wifiService.domain.location.Location;
 import wifiService.domain.location.LocationService;
+import wifiService.domain.wifi.WifiApiRepository;
 import wifiService.domain.wifi.WifiApiService;
 import wifiService.global.DataSourceConfig;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryService {
+    private final WifiApiRepository wifiApiRepository = new WifiApiRepository();
     public void insertHistory(List<History> locationList) {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         String url = dataSourceConfig.sqliteDriveLoad();
@@ -89,7 +91,7 @@ public class HistoryService {
                 history.setWifiId(rs.getInt("WIFI_ID"));
 
                 WifiApiService wifiApiService = new WifiApiService();
-                history.setWifi(wifiApiService.getWifiInfo(history.getWifiId()));
+                history.setWifi(wifiApiRepository.findWifiById(history.getWifiId()));
 
                 // list에 추가
                 historyList.add(history);
@@ -155,7 +157,7 @@ public class HistoryService {
                 history.setWifiId(rs.getInt("WIFI_ID"));
 
                 WifiApiService wifiApiService = new WifiApiService();
-                history.setWifi(wifiApiService.getWifiInfo(history.getWifiId()));
+                history.setWifi(wifiApiRepository.findWifiById(history.getWifiId()));
             } else {
                 System.out.println("히스토리 조회 실패");
             }
