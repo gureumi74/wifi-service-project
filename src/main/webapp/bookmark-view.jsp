@@ -81,8 +81,8 @@
                     out.write("<td>" + bookmarkDetail.getBookmarkGroup().getName() + "</td>");
                     %>
                     <td>
-                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?id=<%= bookmarkDetail.getWifi().getId() %>">
-                            <%= bookmarkDetail.getWifi().getWifiName() %>
+                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?id=<%= bookmarkDetail.getWifiInfoDetail().getId() %>">
+                            <%= bookmarkDetail.getWifiInfoDetail().getWifi().getWifiName() %>
                         </a>
                     </td>
                     <%

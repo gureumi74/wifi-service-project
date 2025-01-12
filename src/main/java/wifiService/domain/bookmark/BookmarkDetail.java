@@ -1,8 +1,7 @@
 package wifiService.domain.bookmark;
 
 import lombok.Data;
-import wifiService.domain.wifi.Wifi;
-import wifiService.domain.wifi.WifiInfo;
+import wifiService.domain.wifi.WifiInfoDetail;
 
 import java.sql.Timestamp;
 
@@ -10,6 +9,6 @@ import java.sql.Timestamp;
 public class BookmarkDetail {
     private Integer id; // 북마크 id
     private BookmarkGroup bookmarkGroup; // 북마크 그룹
-    private Wifi wifi; // Wifi 정보
+    private WifiInfoDetail wifiInfoDetail; // wifi Info 상세 정보
     private Timestamp createdAt; // 생성일시
 }

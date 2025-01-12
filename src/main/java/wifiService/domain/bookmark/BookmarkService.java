@@ -1,6 +1,7 @@
 package wifiService.domain.bookmark;
 
 import wifiService.domain.wifi.WifiInfoRepository;
+import wifiService.domain.wifi.WifiInfoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class BookmarkService {
     private final BookmarkRepository bookmarkRepository = new BookmarkRepository();
     private final WifiInfoRepository wifiInfoRepository = new WifiInfoRepository();
+    private final WifiInfoService wifiInfoService = new WifiInfoService();
 
     public List<BookmarkGroup> viewBookmarkGroup() {
         return bookmarkRepository.findAllBookmarkGroup();
@@ -35,7 +37,7 @@ public class BookmarkService {
             BookmarkDetail bookmarkDetail = new BookmarkDetail();
             bookmarkDetail.setId(bookmark.getId());
             bookmarkDetail.setBookmarkGroup(bookmarkRepository.findBookmarkGroupById(bookmark.getGroupId()));
-            bookmarkDetail.setWifi(wifiInfoRepository.findWifiById(bookmark.getWifiInfoId()));
+            bookmarkDetail.setWifiInfoDetail(wifiInfoService.findWifiInfoById(bookmark.getWifiInfoId()));
             bookmarkDetail.setCreatedAt(bookmark.getCreatedAt());
             bookmarkDetailList.add(bookmarkDetail);
         }
