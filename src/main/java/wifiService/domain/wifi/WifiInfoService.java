@@ -1,8 +1,6 @@
 package wifiService.domain.wifi;
 
-import wifiService.domain.history.History;
 import wifiService.domain.history.HistoryRepository;
-import wifiService.global.DataSourceConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +21,35 @@ public class WifiInfoService {
         System.out.println("20개 데이터 저장 완료");
     }
 
-    // 가까운 와이파이 20개 정보 보기
-    public List<WifiInfoDto> wifiInfo20(Integer historyId) {
+    // history Id를 가지고 가까운 와이파이 20개 정보 보기
+    public List<WifiInfoDetail> wifiInfo20(Integer historyId) {
         List<WifiInfo> wifiInfoList = wifiInfoRepository.find20WifiInfoByHistoryId(historyId);
-        List<WifiInfoDto> wifiInfoDtoList = new ArrayList<>();
+        List<WifiInfoDetail> wifiInfoDetailList = new ArrayList<>();
         for (WifiInfo wifiInfo : wifiInfoList) {
-            WifiInfoDto wifiInfoDto = new WifiInfoDto();
-            wifiInfoDto.setId(wifiInfo.getId());
-            wifiInfoDto.setHistory(historyRepository.findHistoryById(wifiInfo.getHistoryId()));
-            wifiInfoDto.setWifi(wifiInfoRepository.findWifiById(wifiInfo.getWifiId()));
-            wifiInfoDto.setDistance(wifiInfo.getDistance());
-            wifiInfoDto.setSearchedAt(wifiInfo.getSearchedAt());
-            wifiInfoDtoList.add(wifiInfoDto);
+            WifiInfoDetail wifiInfoDetail = new WifiInfoDetail();
+            wifiInfoDetail.setId(wifiInfo.getId());
+            wifiInfoDetail.setHistory(historyRepository.findHistoryById(wifiInfo.getHistoryId()));
+            wifiInfoDetail.setWifi(wifiInfoRepository.findWifiById(wifiInfo.getWifiId()));
+            wifiInfoDetail.setDistance(wifiInfo.getDistance());
+            wifiInfoDetail.setSearchedAt(wifiInfo.getSearchedAt());
+            wifiInfoDetailList.add(wifiInfoDetail);
         }
         System.out.println(wifiInfoList.size());
 
-        return wifiInfoDtoList;
+        return wifiInfoDetailList;
+    }
+
+    // 와이파이 정보 상세 보기
+    public WifiInfoDetail findWifiInfoById(Integer id) {
+        WifiInfo wifiInfo = wifiInfoRepository.findWifiInfoById(id);
+        WifiInfoDetail wifiInfoDetail = new WifiInfoDetail();
+
+        wifiInfoDetail.setId(id);
+        wifiInfoDetail.setWifi(wifiInfoRepository.findWifiById(wifiInfo.getWifiId()));
+        wifiInfoDetail.setHistory(historyRepository.findHistoryById(wifiInfo.getHistoryId()));
+        wifiInfoDetail.setDistance(wifiInfo.getDistance());
+        wifiInfoDetail.setSearchedAt(wifiInfo.getSearchedAt());
+
+        return wifiInfoDetail;
     }
 }
