@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="wifiService.domain.bookmark.Bookmark" %>
+<%@ page import="wifiService.domain.bookmark.BookmarkDetail" %>
 <%@ page import="wifiService.domain.bookmark.BookmarkService" %>
 <%@ page import="wifiService.domain.history.History" %>
 <%@ page import="wifiService.domain.history.HistoryService" %>
@@ -46,7 +46,7 @@
 <body>
 <%
     BookmarkService bookmarkService = new BookmarkService();
-    List<Bookmark> list = bookmarkService.viewBookmark();
+    List<BookmarkDetail> list = bookmarkService.viewBookmark();
 %>
 <h1>북마크 정보</h1>
 <form id ="locationForm" action="${pageContext.request.contextPath}/wifi-info.jsp" method="get">
@@ -75,24 +75,21 @@
         </tr>
         <tbody>
             <% if (!list.isEmpty()) {
-                for (Bookmark bookmark : list) {
+                for (BookmarkDetail bookmarkDetail : list) {
                     out.write("<tr>");
-                    out.write("<td>" + bookmark.getBookmarkId() + "</td>");
-                    out.write("<td>" + bookmark.getGroupName() + "</td>");
-
-                    HistoryService historyService = new HistoryService();
-                    History history = historyService.getHistoryById(bookmark.getHistoryId());
+                    out.write("<td>" + bookmarkDetail.getId() + "</td>");
+                    out.write("<td>" + bookmarkDetail.getBookmarkGroup().getName() + "</td>");
                     %>
                     <td>
-                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?wifiId=<%= history.getWifiId() %>&historyId=<%= bookmark.getHistoryId() %>">
-                            <%= bookmark.getWifiName() %>
+                        <a href="${pageContext.request.contextPath}/wifi-detail.jsp?id=<%= bookmarkDetail.getWifi().getId() %>">
+                            <%= bookmarkDetail.getWifi().getWifiName() %>
                         </a>
                     </td>
                     <%
-                    out.write("<td>" + bookmark.getCreatedAt() + "</td>");
+                    out.write("<td>" + bookmarkDetail.getCreatedAt() + "</td>");
                     %>
                     <td>
-                   <a href="${pageContext.request.contextPath}/bookmark-delete.jsp?id=<%= bookmark.getBookmarkId() %>">삭제</a>
+                   <a href="${pageContext.request.contextPath}/bookmark-delete.jsp?id=<%= bookmarkDetail.getId() %>">삭제</a>
                     </td>
                     <%
                     out.write("</tr>");

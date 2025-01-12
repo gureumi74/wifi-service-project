@@ -44,19 +44,18 @@
 <%
     Integer bookmarkGroupId = Integer.parseInt(request.getParameter("id"));
     BookmarkService bookmarkService = new BookmarkService();
-
-    BookmarkGroup bookmarkGroup = bookmarkService.getBookmarkById(bookmarkGroupId);
+    BookmarkGroup bookmarkGroup = bookmarkService.findBookmarkGroupById(bookmarkGroupId);
     String bookmarkGroupName = bookmarkGroup.getName();
-    Integer bookmarkGroupNo = bookmarkGroup.getBookmarkNo();
+    Integer bookmarkGroupNo = bookmarkGroup.getNo();
 
-    String requestBookmarkGroupName = request.getParameter("bookmarkGroupName");
-    String requestBookmarkGroupNo = request.getParameter("bookmarkGroupNo");
+    String newBookmarkGroupName = request.getParameter("name");
+    String newBookmarkGroupNo = request.getParameter("no");
 
     // 모든 파라미터가 존재할 때만 처리
-        if (requestBookmarkGroupName != null && requestBookmarkGroupNo != null && bookmarkGroupId != null) {
-            Integer newGroupNo = Integer.parseInt(requestBookmarkGroupNo);
+        if (newBookmarkGroupName != null && newBookmarkGroupNo != null && bookmarkGroupId != null) {
+            Integer newGroupNo = Integer.parseInt(newBookmarkGroupNo);
 
-            bookmarkService.updateBookmarkGroup(bookmarkGroupId, requestBookmarkGroupName, newGroupNo);
+            bookmarkService.updateBookmarkGroup(bookmarkGroupId, newBookmarkGroupName, newGroupNo);
 
             // 성공 메시지 출력 및 북마크 페이지로 이동
             out.println("<script>alert('북마크 그룹을 수정하였습니다.'); location.href='" + request.getContextPath() + "/bookmark-manage.jsp';</script>");
@@ -78,17 +77,17 @@
     <a href="${pageContext.request.contextPath}/bookmark-view.jsp">즐겨찾기 보기</a>
     <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">즐겨찾기 관리</a>
 </p>
-<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-group-update.jsp?id=<%= bookmarkGroup.getGroupId() %>" onsubmit="return bookmarkForm()">
+<form id="bookmarkForm" action="${pageContext.request.contextPath}/bookmark-group-update.jsp?id=<%= bookmarkGroup.getId() %>" onsubmit="return bookmarkForm()">
     <table id="wifiService">
         <tr>
             <th>북마크 이름</th>
             <td>
-                <input type="text" id="bookmarkGroupName" name="bookmarkGroupName" value="<%= bookmarkGroupName %>">
+                <input type="text" id="name" name="name" value="<%= bookmarkGroupName %>">
             </td>
         </tr>
         <tr>
             <th>순서</th>
-            <td><input type="text" id="bookmarkGroupNo" name="bookmarkGroupNo" value="<%= bookmarkGroupNo %>"></td>
+            <td><input type="text" id="no" name="no" value="<%= bookmarkGroupNo %>"></td>
         </tr>
         <td colspan="15" class="centered">
             <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">돌아가기</a>
@@ -100,8 +99,8 @@
 <script>
     // 값이 모두 성공적으로 들어왔을 때만 update 전송하기
     function bookmarkForm() {
-        const bookmarkGroupName = document.getElementById("bookmarkGroupName").value.trim();
-        const bookmarkGroupNo = document.getElementById("bookmarkGroupNo").value.trim();
+        const bookmarkGroupName = document.getElementById("name").value.trim();
+        const bookmarkGroupNo = document.getElementById("no").value.trim();
 
         if (!bookmarkGroupName) {
             alert("북마크 이름을 입력해주세요");

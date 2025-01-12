@@ -81,9 +81,9 @@
             <% if (!groupList.isEmpty()) {
                 for (BookmarkGroup bookmarkGroup : groupList) {
                     out.write("<tr>");
-                    out.write("<td>" + bookmarkGroup.getGroupId() + "</td>");
+                    out.write("<td>" + bookmarkGroup.getId() + "</td>");
                     out.write("<td>" + bookmarkGroup.getName() + "</td>");
-                    out.write("<td>" + bookmarkGroup.getBookmarkNo() + "</td>");
+                    out.write("<td>" + bookmarkGroup.getNo() + "</td>");
                     out.write("<td>" + bookmarkGroup.getCreatedAt() + "</td>");
                     if(bookmarkGroup.getUpdatedAt() != null) {
                         out.write("<td>" + bookmarkGroup.getUpdatedAt() + "</td>");
@@ -92,8 +92,8 @@
                     }
                     %>
                     <td>
-                   <a href="${pageContext.request.contextPath}/bookmark-group-update.jsp?id=<%= bookmarkGroup.getGroupId() %>">수정 </a>
-                   <a href="${pageContext.request.contextPath}/bookmark-group-delete.jsp?id=<%= bookmarkGroup.getGroupId() %>">삭제</a>
+                   <a href="${pageContext.request.contextPath}/bookmark-group-update.jsp?id=<%= bookmarkGroup.getId() %>">수정 </a>
+                   <a href="${pageContext.request.contextPath}/bookmark-group-delete.jsp?id=<%= bookmarkGroup.getId() %>">삭제</a>
                     </td>
                     <%
                     out.write("</tr>");

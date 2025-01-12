@@ -77,10 +77,10 @@
     <select if="bookmarkId" name="bookmarkId">
         <option value="" selected>북마크 그룹 선택</option>
         <% for (BookmarkGroup bookmarkGroup : bookmarkList) { %>
-            <option value="<%= bookmarkGroup.getGroupId() %>"><%= bookmarkGroup.getName() %></option>
+            <option value="<%= bookmarkGroup.getId() %>"><%= bookmarkGroup.getName() %></option>
         <% } %>
     </select>
-    <input type="hidden" name="historyId" value="<%= wifiInfoDetail.getHistory().getId() %>">
+    <input type="hidden" name="id" value="<%= wifiInfoDetail.getId() %>">
     <button type="submit">즐겨찾기 추가하기</button>
 </form>
 <script>

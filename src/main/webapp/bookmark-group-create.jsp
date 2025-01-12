@@ -42,8 +42,8 @@
 </head>
 <body>
 <%
-    String bookmarkGroupName = request.getParameter("bookmarkGroupName");
-    String bookmarkGroupNo = request.getParameter("bookmarkGroupNo");
+    String bookmarkGroupName = request.getParameter("name");
+    String bookmarkGroupNo = request.getParameter("no");
 
     // 모든 파라미터가 존재할 때만 처리
     if (bookmarkGroupName != null && bookmarkGroupNo != null && !bookmarkGroupName.isEmpty() && !bookmarkGroupNo.isEmpty()) {
@@ -76,11 +76,11 @@
     <table id="wifiService">
         <tr>
             <th>북마크 이름</th>
-            <td><input type="text" id="bookmarkGroupName" name="bookmarkGroupName"></td>
+            <td><input type="text" id="name" name="name"></td>
         </tr>
         <tr>
             <th>순서</th>
-            <td><input type="text" id="bookmarkGroupNo" name="bookmarkGroupNo"></td>
+            <td><input type="text" id="no" name="no"></td>
         </tr>
         <td colspan="15" class="centered">
             <a href="${pageContext.request.contextPath}/bookmark-manage.jsp">돌아가기</a>
@@ -92,8 +92,8 @@
 <script>
     // 값이 모두 들어왔을 때만 create 전송하기
     function bookmarkForm() {
-        const bookmarkGroupName = document.getElementById("bookmarkGroupName").value.trim();
-        const bookmarkGroupNo = document.getElementById("bookmarkGroupNo").value.trim();
+        const bookmarkGroupName = document.getElementById("name").value.trim();
+        const bookmarkGroupNo = document.getElementById("no").value.trim();
 
         if (!bookmarkGroupName) {
             alert("북마크 이름을 입력해주세요");
