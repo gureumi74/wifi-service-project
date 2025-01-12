@@ -81,7 +81,7 @@
                 <td><%= history.getLNT() %></td>
                 <td><%= history.getSearchedAt() %></td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/delete-location.jsp">
+                    <form action="${pageContext.request.contextPath}/delete-history.jsp">
                         <input type="hidden" name="id" value="<%= history.getId() %>">
                         <button type="submit">삭제<button>
                     </form>

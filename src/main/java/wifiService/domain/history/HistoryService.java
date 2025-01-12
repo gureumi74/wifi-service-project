@@ -23,4 +23,9 @@ public class HistoryService {
     public List<History> viewHistory() {
         return historyRepository.findAllHistory();
     }
+
+    // History 삭제 기능
+    public void deleteHistory(Integer id) {
+        historyRepository.deleteHistory(id);
+    }
 }
